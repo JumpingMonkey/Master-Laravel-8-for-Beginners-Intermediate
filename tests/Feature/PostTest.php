@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\BlogPost;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -34,6 +35,19 @@ class PostTest extends TestCase
         $this->assertDatabaseHas('blog_posts', [
             'title' => 'New blog post title!'
         ]);
+    }
+
+    public function testSee1BlogPostWithComments()
+    {
+        //Arrange
+        $post = $this->createDummyBlogPost();
+        Comment::factory()->count(4)->create([
+            'blog_post_id' => $post->id,
+        ]);
+        //Act
+        $response = $this->get('/posts');
+
+        $response->assertSeeText('4 comments');
     }
 
     public function testStoreValid()
