@@ -134,12 +134,13 @@ class PostTest extends TestCase
 
     }
 
-    private function createDummyBlogPost() : BlogPost
+    private function createDummyBlogPost()
     {
-        $post = new BlogPost();
-        $post->title = 'New blog post title!';
-        $post->content = 'New blog post content!';
-        $post->save();
-        return $post;
+//        $post = new BlogPost();
+//        $post->title = 'New blog post title!';
+//        $post->content = 'New blog post content!';
+//        $post->save();
+          return BlogPost::factory()->baseData()->create();
+//        return $post;
     }
 }
