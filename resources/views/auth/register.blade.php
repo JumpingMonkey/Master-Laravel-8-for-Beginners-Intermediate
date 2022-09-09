@@ -41,7 +41,7 @@
                class="form-control">
     </div>
 
-    <div class="d-grid gap-2"><button type="submit" class="btn btn-primary">Submit</button></div>
+    <div class="d-grid gap-2"><button type="submit" class="btn btn-primary">Register!</button></div>
 
 
 </form>
