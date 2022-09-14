@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\BlogPost;
+use App\Models\Comment;
 use App\Models\User;
+use Database\Factories\CommentFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -18,7 +21,10 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        User::factory()->johnDoe()->create();
-        User::factory(10)->create();
+        $this->call([
+            UsersTableSeeder::class,
+            BlogPostsTableSeeder::class,
+            CommentsTableSeeder::class,
+        ]);
     }
 }
