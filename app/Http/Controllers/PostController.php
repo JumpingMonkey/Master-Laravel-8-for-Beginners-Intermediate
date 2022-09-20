@@ -70,6 +70,10 @@ class PostController extends Controller
      */
     public function create()
     {
+//        $this->authorize('posts.create');
+//        $this->authorize('create', BlogPost::class);
+
+
         return view('posts.create');
     }
 
@@ -115,7 +119,8 @@ class PostController extends Controller
 //            abort(403);
 //        }
 
-        $this->authorize('update-post', $post);
+//        $this->authorize('posts.update', $post);
+        $this->authorize('update', $post);
 
         return view('posts.edit', ['post' => BlogPost::findOrFail($id)]);
     }
@@ -135,7 +140,8 @@ class PostController extends Controller
 //            abort(403);
 //        }
 
-        $this->authorize('update-post', $post);
+//        $this->authorize('posts.update', $post);
+        $this->authorize('update', $post);
 
         $validated = $request->validated();
         $post->fill($validated);
@@ -160,7 +166,8 @@ class PostController extends Controller
 //            abort(403, "You can't delete this post!");
 //        }
 
-        $this->authorize('delete-post', $post);
+//        $this->authorize('posts.delete', $post);
+        $this->authorize('delete', $post);
 
         $post->delete();
 
