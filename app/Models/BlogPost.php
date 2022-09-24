@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\LatestScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,6 +31,8 @@ class BlogPost extends Model
     {
         parent::boot();
 
+        static::addGlobalScope(new latestScope);
+
         static::deleting(function (BlogPost $blogPost){
             $blogPost->comments()->delete();
         });
@@ -37,5 +40,7 @@ class BlogPost extends Model
         static::restoring(function (BlogPost $blogPost){
             $blogPost->comments()->restore();
         });
+
+
     }
 }
