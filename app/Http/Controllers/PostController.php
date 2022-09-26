@@ -60,8 +60,10 @@ class PostController extends Controller
 //
 //        dd(DB::getQueryLog());
 
-        return view('posts.index',
-            ['posts' => BlogPost::withCount('comments')->get()]);
+        return view('posts.index', [
+                'posts' => BlogPost::withCount('comments')->latest()->get(),
+                'mostCommented' => BlogPost::mostCommented()->take(5)->get(),
+            ]);
     }
 
     /**
@@ -105,7 +107,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return view('posts.show', ['post' => BlogPost::with('comments')->findOrFail($id)]);
+        return view('posts.show', [
+            'post' => BlogPost::with('comments')->findOrFail($id),
+        ]);
+//        return view('posts.show', ['post' => BlogPost::with(['comments'=> function($q){
+//            $q->latest();
+//        }])->findOrFail($id)]);
     }
 
     /**
