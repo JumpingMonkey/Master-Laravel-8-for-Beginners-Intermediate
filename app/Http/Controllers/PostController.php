@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -61,8 +62,9 @@ class PostController extends Controller
 //        dd(DB::getQueryLog());
 
         return view('posts.index', [
-                'posts' => BlogPost::withCount('comments')->latest()->get(),
-                'mostCommented' => BlogPost::mostCommented()->take(5)->get(),
+            'posts' => BlogPost::withCount('comments')->latest()->get(),
+            'mostCommented' => BlogPost::mostCommented()->take(5)->get(),
+            'mostActive' => User::withMostBlogPosts()->take(5)->get(),
             ]);
     }
 
