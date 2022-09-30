@@ -49,6 +49,23 @@
                     </ul>
                 </div>
             </div>
+            <div class="row mt-4">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Most active users last month</h5>
+                        <h6 class="card-subtitle m-2 text-muted">Users with most posts written last month</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @forelse($mostActiveLastMonth as $key => $user)
+                            <li class="list-group-item">
+                                {{ $user->name }}
+                            </li>
+                        @empty
+                            <div>No comments yet!</div>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
