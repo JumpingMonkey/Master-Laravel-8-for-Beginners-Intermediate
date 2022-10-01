@@ -14,57 +14,37 @@
     <div class="col-4">
         <div class="container">
             <div class="row">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Most commented</h5>
-                        <h6 class="card-subtitle m-2 text-muted">What people currently talking about.</h6>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        @forelse($mostCommented as $key => $post)
+                @component('components.card', [
+                    'title' => 'Most active users',
+                    'subTitle' => 'Users with most posts written'])
+                    @slot('items')
+                        @foreach($mostCommented as $key => $post)
                         <li class="list-group-item">
                             <a href="{{ route('posts.show', ['post' => $post->id])}}">
                                 {{ $post->title }}
                             </a>
                         </li>
-                        @empty
-                            <div>No comments yet!</div>
-                        @endforelse
-                    </ul>
-                </div>
+                        @endforeach
+                    @endslot
+                @endcomponent
             </div>
             <div class="row mt-4">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Most active users</h5>
-                        <h6 class="card-subtitle m-2 text-muted">Users with most posts written</h6>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        @forelse($mostActive as $key => $user)
-                            <li class="list-group-item">
-                                {{ $user->name }}
-                            </li>
-                        @empty
-                            <div>No comments yet!</div>
-                        @endforelse
-                    </ul>
-                </div>
+{{--                @component('components.card', [--}}
+{{--                    'title' => 'Most active users',--}}
+{{--                    'subtitle' => 'Users with most posts written',--}}
+{{--                    'items' => collect($mostActive)->pluck('name')])--}}
+{{--                @endcomponent--}}
+                <x-card title="Most active users"
+                        sub-title="Users with most posts written"
+                        :items="collect($mostActive)->pluck('name')"
+                ></x-card>
             </div>
             <div class="row mt-4">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Most active users last month</h5>
-                        <h6 class="card-subtitle m-2 text-muted">Users with most posts written last month</h6>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        @forelse($mostActiveLastMonth as $key => $user)
-                            <li class="list-group-item">
-                                {{ $user->name }}
-                            </li>
-                        @empty
-                            <div>No comments yet!</div>
-                        @endforelse
-                    </ul>
-                </div>
+                <x-card
+                    title="Most active users last month"
+                    sub-title="Users with most posts written last month"
+                    :items="collect($mostActiveLastMonth)->pluck('name')">
+                </x-card>
             </div>
         </div>
     </div>
