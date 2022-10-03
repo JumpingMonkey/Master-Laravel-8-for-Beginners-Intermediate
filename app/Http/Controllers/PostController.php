@@ -7,7 +7,7 @@ use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
@@ -48,24 +48,24 @@ class PostController extends Controller
      */
     public function index()
     {
-//        DB::connection()->enableQuerylog();
 
-//        $posts = BlogPost::all();
-//        $posts = BlogPost::with('comments')->get();
+        $mostCommented = Cache::remember('blog-post-commented', now()->addSeconds(10), function (){
+            return BlogPost::mostCommented()->take(5)->get();
+        });
 
-//        foreach($posts as $post){
-//            foreach($post->comments as $comment){
-//                echo $comment->content . '</br>';
-//            }
-//        }
-//
-//        dd(DB::getQueryLog());
+        $mostActive = Cache::remember('users-most-active', now()->addSeconds(10), function (){
+            return User::withMostBlogPosts()->take(5)->get();
+        });
+
+        $mostActiveLastMonth = Cache::remember('users-most-active-last-month', now()->addSeconds(10), function (){
+            return User::withMostBlogPostLastMonth()->take(5)->get();
+        });
 
         return view('posts.index', [
             'posts' => BlogPost::withCount('comments')->with('user')->latest()->get(),
-            'mostCommented' => BlogPost::mostCommented()->take(5)->get(),
-            'mostActive' => User::withMostBlogPosts()->take(5)->get(),
-            'mostActiveLastMonth' => User::withMostBlogPostLastMonth()->take(5)->get(),
+            'mostCommented' => $mostCommented,
+            'mostActive' => $mostActive,
+            'mostActiveLastMonth' => $mostActiveLastMonth,
             ]);
     }
 
@@ -110,8 +110,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        $blogPost = Cache::remember("blog-post-{$id}", now()->addSeconds(10), function () use($id){
+            return BlogPost::with('comments')->findOrFail($id);
+        });
+
         return view('posts.show', [
-            'post' => BlogPost::with('comments')->findOrFail($id),
+            'post' => $blogPost,
         ]);
 //        return view('posts.show', ['post' => BlogPost::with(['comments'=> function($q){
 //            $q->latest();
