@@ -114,8 +114,43 @@ class PostController extends Controller
             return BlogPost::with('comments')->findOrFail($id);
         });
 
+        $sessionId = session()->getId();
+        $counterKey = "blog-post-{$id}-counter";
+        $userKey = "blog-post-{$id}-users";
+
+        $users = Cache::get($userKey, []);
+        $usersUpdate = [];
+        $difference = 0;
+        $now = now();
+
+        foreach ($users as $session => $lastVisit){
+            if($now->diffInMinutes($lastVisit) >= 1){
+                $difference--;
+            } else {
+                $usersUpdate[$session] = $lastVisit;
+            }
+        }
+
+        if (!array_key_exists($sessionId, $users)
+        OR now()->diffInMinutes($users[$sessionId]) >= 1
+        ){
+            $difference++;
+        }
+
+        $usersUpdate[$sessionId] = $now;
+        Cache::forever($userKey, $usersUpdate);
+
+        if (!Cache::has($counterKey)) {
+            Cache::forever($counterKey, 1);
+        } else {
+            Cache::increment($counterKey, $difference);
+        }
+
+        $counter = Cache::get($counterKey);
+
         return view('posts.show', [
             'post' => $blogPost,
+            'counter' => $counter,
         ]);
 //        return view('posts.show', ['post' => BlogPost::with(['comments'=> function($q){
 //            $q->latest();
