@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\View\Components\Badge;
 use App\View\Components\Card;
+use App\View\Components\Tags;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.badge', 'badge');
         Blade::component('components.updated', 'updated');
         Blade::component(Card::class, 'card');
+        Blade::component(Tags::class, 'tags');
     }
 }
