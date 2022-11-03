@@ -22,24 +22,6 @@ class PostController extends Controller
             'update'
         ]);
     }
-    private $posts = [
-        1 => [
-            'title' => 'Intro to Laravel',
-            'content' => 'This is a short intro to Laravel',
-            'is_new' => true,
-            'has_comments' => true
-        ],
-        2 => [
-            'title' => 'Intro to PHP',
-            'content' => 'This is a short intro to PHP',
-            'is_new' => false
-        ],
-        3 => [
-            'title' => 'Intro to Golang',
-            'content' => 'This is a short intro to Golang',
-            'is_new' => false
-        ]
-    ];
 
     /**
      * Display a listing of the resource.
