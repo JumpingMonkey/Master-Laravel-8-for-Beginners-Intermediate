@@ -15,7 +15,7 @@
 @endcomponent
 
 {{--@component('components.tags', ['tags' => $post->tags]) @endcomponent--}}
-<x-tags :tags="$post->tags"></x-tags>
+    <x-tags :tags="$post->tags"></x-tags>
 
 @if($post->comments_count)
     <p>{{ $post->comments_count }} comments</p>
