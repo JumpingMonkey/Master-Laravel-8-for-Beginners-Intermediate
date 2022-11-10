@@ -3,6 +3,8 @@
 @section('title', $post->title)
 
 @section('content')
+    <div class="row">
+        <div class="col-8">
 <h1>
     {{$post->title}}
         @component('components.badge', ['show' => now()->diffInMinutes($post->created_at) < 30])
@@ -36,5 +38,8 @@ Updated
 @empty
     <a>No comments yes!</a>
 @endforelse
-
+    </div>
+    <div class="col-4">
+        @include('posts.partials._activity')
+    </div>
 @endsection
