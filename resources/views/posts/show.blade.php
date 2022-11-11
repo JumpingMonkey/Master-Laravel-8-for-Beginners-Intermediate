@@ -32,7 +32,8 @@ Updated
     <p>
         {{ $comment->content }}
     </p>
-    @component('components.updated', ['date' => $comment->created_at])
+
+    @component('components.updated', ['date' => $comment->created_at, 'name' => $comment->user->name])
 
     @endcomponent
 @empty
