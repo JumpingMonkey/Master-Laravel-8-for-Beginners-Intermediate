@@ -36,7 +36,6 @@ Updated
     </p>
 
     @component('components.updated', ['date' => $comment->created_at, 'name' => $comment->user->name])
-
     @endcomponent
 @empty
     <a>No comments yes!</a>

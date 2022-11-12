@@ -36,7 +36,7 @@ class AddUserToCommentsTable extends Migration
     public function down()
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->dropForeign('user_id');
+            $table->dropForeign('comments_user_id_foreign');
             $table->dropColumn('user_id');
         });
     }
