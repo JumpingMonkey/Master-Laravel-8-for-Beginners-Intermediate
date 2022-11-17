@@ -73,10 +73,11 @@ class PostController extends Controller
             dump($file->store('thumbnails'));;
             dump(Storage::disk('public')->putFile('thumbnails', $file));
 
-            dump($file->storeAs('thumbnails', $post->id . '.' . $file->guessExtension()));
-            dump(Storage::putFileAs('thumbnails', $file, $post->id . '.' . $file->guessExtension()));
+            $name1 = $file->storeAs('thumbnails', $post->id . '.' . $file->guessExtension());
+            $name2 = Storage::disk('local')->putFileAs('thumbnails', $file, $post->id . '.' . $file->guessExtension());
 
-            dump(Storage::disk('local')->putFileAs('thumbnails', $file, $post->id . '.' . $file->guessExtension()));
+            dump(Storage::url($name1));
+            dump(Storage::disk('local')->url($name2));
         }
         die;
 
