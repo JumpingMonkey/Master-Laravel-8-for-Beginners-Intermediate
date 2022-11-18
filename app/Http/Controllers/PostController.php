@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,23 +64,15 @@ class PostController extends Controller
         $validated['user_id'] = $request->user()->id;
         $post = BlogPost::create($validated);
 
-        $hasFile = $request->hasFile('thumbnail');
-
-        if($hasFile)
+        if($request->hasFile('thumbnail'))
         {
-            $file = $request->file('thumbnail');
-            dump($file, $file->getClientMimeType(), $file->getClientOriginalExtension());
-
-            dump($file->store('thumbnails'));;
-            dump(Storage::disk('public')->putFile('thumbnails', $file));
-
-            $name1 = $file->storeAs('thumbnails', $post->id . '.' . $file->guessExtension());
-            $name2 = Storage::disk('local')->putFileAs('thumbnails', $file, $post->id . '.' . $file->guessExtension());
-
-            dump(Storage::url($name1));
-            dump(Storage::disk('local')->url($name2));
+            $path = $request->file('thumbnail')->store('thumbnails');
+            $post->image()->save(
+                Image::create([
+                    'path' => $path,
+                ])
+            );
         }
-        die;
 
         $request->session()->flash('status', 'The blog post was created!');
 
