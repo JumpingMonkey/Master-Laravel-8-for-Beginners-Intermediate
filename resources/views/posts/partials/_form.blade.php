@@ -9,10 +9,11 @@
     <label for="content">Content</label>
     <textarea id="content" class="form-control" name="content">{{  old('content', optional($post ?? null)->content) }}</textarea>
 </div>
-@component('components.errors')
-@endcomponent
 
 <div class="mb-3">
     <label for="file" class="form-label">Thumbnail</label>
     <input id="file" class="form-control" type="file" name="thumbnail"/>
 </div>
+
+@component('components.errors')
+@endcomponent
