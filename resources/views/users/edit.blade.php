@@ -11,7 +11,7 @@
 
         <div class="row">
             <div class="col-4">
-                <img src="#" class="img-thumbnail avatar">
+                <img src="{{ $user->image ? $user->image->url() : '' }}" class="img-thumbnail avatar">
                 <div class="card mt-4">
                     <div class="card-body">
                         <h6>Upload different photo</h6>
@@ -24,6 +24,8 @@
                     <label>Name:</label>
                     <input class="form-control" value="" type="text" name="name" />
                 </div>
+                @component('components.errors')
+                @endcomponent
                 <div class="mt-3">
                     <input type="submit" class="btn btn-primary" value="Save changes">
                 </div>

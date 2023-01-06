@@ -68,7 +68,7 @@ class PostController extends Controller
         {
             $path = $request->file('thumbnail')->store('thumbnails');
             $post->image()->save(
-                Image::create([
+                Image::make([
                     'path' => $path,
                 ])
             );
@@ -187,7 +187,7 @@ class PostController extends Controller
                 $post->image->save();
             } else {
                 $post->image()->save(
-                    Image::create([
+                    Image::make([
                         'path' => $path,
                     ])
                 );
