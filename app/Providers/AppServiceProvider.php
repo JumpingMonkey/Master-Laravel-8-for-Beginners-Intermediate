@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\ViewComposers\ActivityComposer;
 use App\View\Components\Badge;
 use App\View\Components\Card;
+use App\View\Components\CommentForm;
 use App\View\Components\Error;
 use App\View\Components\Errors;
 use App\View\Components\Tags;
@@ -38,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::component(Tags::class, 'tags');
         Blade::component(Errors::class, 'errors');
         Blade::component(Error::class, 'error');
+        Blade::component(CommentForm::class, 'commentForm');
+        Blade::component(CommentList::class, 'commentList');
 
 //        view()->composer(['*'], ActivityComposer::class);
         view()->composer(['posts.index', 'posts.show'], ActivityComposer::class);

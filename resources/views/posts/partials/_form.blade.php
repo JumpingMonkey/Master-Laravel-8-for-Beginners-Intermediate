@@ -2,8 +2,6 @@
     <label for="title">Title</label>
     <input id="title" class="form-control" type="text" name="title" value="{{ old('title', optional($post ?? null)->title) }}">
 </div>
-{{--@component('components.error', ['fieldName' => 'title'])--}}
-{{--@endcomponent--}}
 <x-error fieldName="title"></x-error>
 <div class=" mb-3">
     <label for="content">Content</label>
