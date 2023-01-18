@@ -62,7 +62,7 @@ class PostController extends Controller
     {
         $validated = $request->validated();
         $validated['user_id'] = $request->user()->id;
-        $post = BlogPost::create($validated);
+        $post = BlogPost::query()->create($validated);
 
         if($request->hasFile('thumbnail'))
         {

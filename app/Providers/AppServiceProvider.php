@@ -6,6 +6,7 @@ use App\Http\ViewComposers\ActivityComposer;
 use App\View\Components\Badge;
 use App\View\Components\Card;
 use App\View\Components\CommentForm;
+use App\View\Components\CommentList;
 use App\View\Components\Error;
 use App\View\Components\Errors;
 use App\View\Components\Tags;
