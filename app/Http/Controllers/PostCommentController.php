@@ -22,9 +22,20 @@ class PostCommentController extends Controller
             'user_id' => $request->user()->id
         ]);
 
-        Mail::to($post->user)->send(
+//        Mail::to($post->user)->send(
+//            new CommentPostedMarkdown($comment)
+//        );
+
+        $when = now()->addMinutes(1);
+
+        Mail::to($post->user)->queue(
             new CommentPostedMarkdown($comment)
         );
+
+//        Mail::to($post->user)->later(
+//            $when,
+//            new CommentPostedMarkdown($comment)
+//        );
 
         return redirect()->back()
             ->withStatus('Comment was created!');
