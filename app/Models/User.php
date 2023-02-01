@@ -13,6 +13,18 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * The const that includes allowed locales.
+     *
+     * @var array
+     */
+
+    public const LOCALES = [
+        'en' => 'English',
+        'es' => 'Espanol',
+        'de' => 'Deutsch'
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

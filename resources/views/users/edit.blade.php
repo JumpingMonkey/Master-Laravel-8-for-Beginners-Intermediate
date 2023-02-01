@@ -21,9 +21,21 @@
             </div>
             <div class="col-8">
                 <div class="">
-                    <label>Name:</label>
+                    <label>{{__('Name:')}}</label>
                     <input class="form-control" value="" type="text" name="name" />
                 </div>
+
+                <div class="">
+                    <label>{{__('Language:')}}</label>
+                    <select class="form-select" name="locale">
+                        @foreach(\App\Models\User::LOCALES as $locale => $label)
+                            <option value="{{$locale}}" {{ $user->locale !== $locale ?: 'selected' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 @component('components.errors')
                 @endcomponent
                 <div class="mt-3">

@@ -27,6 +27,14 @@
             @endif
 
         @else
+            <a class="p-2 text-dark"
+               href="{{ route('users.show', ['user' => \Illuminate\Support\Facades\Auth::user()->id]) }}">
+                {{__('Profile')}}
+            </a>
+            <a class="p-2 text-dark"
+               href="{{ route('users.edit', ['user' => \Illuminate\Support\Facades\Auth::user()->id]) }}">
+                {{__('Edit Profile')}}
+            </a>
             <a class="p-2 text-dark" href="{{ route('logout') }}"
             onclick="event.preventDefault();document.getElementById('logout-form').submit()"
             >{{__('Logout')}} ({{ \Illuminate\Support\Facades\Auth::user()->name }})</a>

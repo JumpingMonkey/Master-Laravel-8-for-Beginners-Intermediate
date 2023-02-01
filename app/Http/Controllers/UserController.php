@@ -88,8 +88,11 @@ class UserController extends Controller
                     Image::make(['path' => $path])
                 );
             }
-
         }
+
+        $user->locale = $request->get('locale');
+        $user->save();
+
         return redirect()->back()->withStatus('User profile has updated!');
     }
 
