@@ -10,6 +10,8 @@
         <div class="col-8">
             <h3>{{ $user->name }}</h3>
 
+            <p>{{ trans_choice('messages.people.reading', $counter) }}</p>
+
             @component('components.comment-form', ['route' => route('users.comments.store', ['user' => $user->id])])
             @endcomponent
 
