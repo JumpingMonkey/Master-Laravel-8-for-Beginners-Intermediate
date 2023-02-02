@@ -68,7 +68,11 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(
             CounterContract::class,
-            DummyCounter::class);
+            Counter::class);
+
+//        $this->app->bind(
+//            CounterContract::class,
+//            DummyCounter::class);
 
 //        $this->app->when(Counter::class)
 //            ->needs('$timeout')
