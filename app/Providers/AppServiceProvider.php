@@ -7,6 +7,7 @@ use App\Models\BlogPost;
 use App\Models\Comment;
 use App\Observers\BlogPostObserver;
 use App\Observers\CommentObserver;
+use App\Services\Counter;
 use App\View\Components\Badge;
 use App\View\Components\Card;
 use App\View\Components\CommentForm;
@@ -52,5 +53,9 @@ class AppServiceProvider extends ServiceProvider
 
         BlogPost::observe(BlogPostObserver::class);
         Comment::observe(CommentObserver::class);
+
+        $this->app->singleton(Counter::class, function($app){
+            return new Counter(env("COUNTER_TIMEOUT"));
+        });
     }
 }
