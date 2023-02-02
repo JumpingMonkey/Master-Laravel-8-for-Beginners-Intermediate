@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\CounterContract;
 use App\Events\BlogPostPosted;
 use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use App\Models\Image;
-use App\Models\User;
 use App\Services\Counter;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    public function __construct()
+
+    private $counter;
+
+    public function __construct(Counter $counter)
     {
         $this->middleware('auth')->only([
             'create',
@@ -25,6 +25,8 @@ class PostController extends Controller
             'destroy',
             'update'
         ]);
+
+        $this->counter = $counter;
     }
 
     /**
@@ -97,11 +99,11 @@ class PostController extends Controller
                 ->findOrFail($id);
         });
 
-        $counter = resolve(Counter::class);
+//        $counter = resolve(Counter::class);
 
         return view('posts.show', [
             'post' => $blogPost,
-            'counter' => $counter->increment("blog-post-{$id}", ["blog-post"]),
+            'counter' => $this->counter->increment("blog-post-{$id}", ["blog-post"]),
         ]);
 //        return view('posts.show', ['post' => BlogPost::with(['comments'=> function($q){
 //            $q->latest();
