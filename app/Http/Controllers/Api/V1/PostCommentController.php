@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Comment as CommentResource;
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
 class PostCommentController extends Controller
@@ -10,14 +12,11 @@ class PostCommentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BlogPost $post)
     {
-        return response()->json([
-            'status' => 'OK',
-            'comments' => [],
-        ]);
+        return CommentResource::collection($post->comments()->with('user')->get());
     }
 
     /**

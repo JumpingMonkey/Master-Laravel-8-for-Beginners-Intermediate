@@ -19,9 +19,12 @@ use App\View\Components\Errors;
 use App\View\Components\Tags;
 use Illuminate\Contracts\Cache\Factory;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+
+use App\Http\Resources\Comment as CommentResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -69,6 +72,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             CounterContract::class,
             Counter::class);
+
+//        CommentResource::withoutWrapping();
+        JsonResource::withoutWrapping();
 
 //        $this->app->bind(
 //            CounterContract::class,
