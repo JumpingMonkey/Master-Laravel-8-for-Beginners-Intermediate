@@ -14,13 +14,13 @@ class PostCommentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->only(['store']);
+        $this->middleware('auth:api')->only(['store', 'destroy']);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(BlogPost $post, Request $request)
     {
@@ -37,7 +37,7 @@ class PostCommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return CommentResource
      */
     public function store(BlogPost $post, StoreComment $request)
     {
@@ -67,10 +67,11 @@ class PostCommentController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return CommentResource
      */
     public function update(BlogPost $post, Comment $comment, StoreComment $request)
     {
+        $this->authorize($comment);
         $comment->content = $request->input('content');
         $comment->save();
 
@@ -85,6 +86,7 @@ class PostCommentController extends Controller
      */
     public function destroy(BlogPost $post, Comment $comment)
     {
+        $this->authorize($comment);
         $comment->delete();
         return response()->noContent();
     }
